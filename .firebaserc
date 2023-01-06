@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fbms-shreeva-demo": {
+      "hosting": {
+        "VirajPosSystem": [
+          "viraj-pos"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fbms-shreeva-demo"
+  }
+}
