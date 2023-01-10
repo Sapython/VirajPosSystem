@@ -15,6 +15,7 @@ import { provideRemoteConfig,getRemoteConfig } from '@angular/fire/remote-config
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { DatabaseService } from './services/database.service';
+import { enableIndexedDbPersistence } from '@firebase/firestore';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,11 @@ import { DatabaseService } from './services/database.service';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
+    provideFirestore(() => {
+      let fs = getFirestore();
+      enableIndexedDbPersistence(fs)
+      return fs
+    }),
     provideFunctions(() => getFunctions()),
     provideMessaging(() => getMessaging()),
     providePerformance(() => getPerformance()),
