@@ -16,6 +16,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { DatabaseService } from './services/database.service';
 import { enableIndexedDbPersistence } from '@firebase/firestore';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { enableIndexedDbPersistence } from '@firebase/firestore';
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([])
   ],
   providers: [
     ScreenTrackingService,UserTrackingService,DatabaseService
