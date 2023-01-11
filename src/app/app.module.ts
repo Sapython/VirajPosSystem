@@ -19,6 +19,21 @@ import { enableIndexedDbPersistence } from '@firebase/firestore';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
+import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
+
+const dbConfig: DBConfig  = {
+  name: 'MyDb',
+  version: 1,
+  objectStoresMeta: [{
+    store: 'people',
+    storeConfig: { keyPath: 'id', autoIncrement: true },
+    storeSchema: [
+      { name: 'name', keypath: 'name', options: { unique: false } },
+      { name: 'email', keypath: 'email', options: { unique: false } }
+    ]
+  }]
+};
+
 @NgModule({
   declarations: [
     AppComponent
@@ -46,7 +61,8 @@ import { EffectsModule } from '@ngrx/effects';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    NgxIndexedDBModule.forRoot(dbConfig)
   ],
   providers: [
     ScreenTrackingService,UserTrackingService,DatabaseService

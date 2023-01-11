@@ -2,16 +2,25 @@
 <!-- Toolbar -->
 <router-outlet></router-outlet>
 <input type="text" #text>
-<button (click)="dbService.addTask(text.value)">Add task</button>
+<button (click)="onlineDbService.addTask(text.value)">Add task</button>
 <ol>
   <li *ngFor="let item of list">
     {{item.task}}
-    <button (click)="dbService.deleteTask(item.id)">-</button>
+    <button (click)="onlineDbService.deleteTask(item.id)">-</button>
   </li>
 </ol>
 
-<div class="grid">
+
+<input type="text" #textDB>
+<button (click)="addToDb()">Add to db</button>
+<!-- <ol>
+  <li *ngFor="let item of getDataFromDb() | async">
+    {{item.name}}
+  </li>
+</ol> -->
+
+<!-- <div class="grid">
   <div class="box" [ngStyle]="{'background-color':item[0],'box-shadow':('0px 3px 20px rgba('+item[1][0]+','+item[1][1]+','+item[1][2]+',0.9)')}" *ngFor="let item of coloredDivs">
     
   </div>
-</div>
+</div> -->

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { setDoc, doc, Firestore, increment, updateDoc, addDoc, collection, getDocs, collectionSnapshots, collectionData } from '@angular/fire/firestore';
 import { deleteDoc } from '@firebase/firestore';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
-  constructor(private fs:Firestore) { }
+  constructor(private fs:Firestore,private dbService: NgxIndexedDBService) { }
 
   getTasks(){
     return collectionData(collection(this.fs,'tasks'),{idField:'id'})

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
 import { DatabaseService } from './services/database.service';
 const HSLToRGB = (h:any, s:any, l:any) => {
   s /= 100;
@@ -16,13 +17,14 @@ const HSLToRGB = (h:any, s:any, l:any) => {
 })
 export class AppComponent implements OnInit {
   title = 'VirajPosSystem';
-  constructor(public dbService: DatabaseService) {}
+  constructor(public onlineDbService: DatabaseService,private dbService: NgxIndexedDBService) {}
   counter = 0;
   added = 0;
   list: any[] = [];
+  people:any[] = [];
   coloredDivs: any[] = [];
   ngOnInit(): void {
-    this.dbService.getTasks().subscribe((doc) => {
+    this.onlineDbService.getTasks().subscribe((doc) => {
       this.list = [];
       doc.forEach((doc) => {
         console.log(doc);
@@ -41,5 +43,22 @@ export class AppComponent implements OnInit {
     let mainTwo = (25 + 70 * Math.random())
     let mainThree = (85 + 10 * Math.random())
     return [`hsl(${mainOne}, ${mainTwo}%, ${mainThree}%)`,HSLToRGB(mainOne, mainTwo, mainThree)];
+  }
+
+
+  getDataFromDb(){
+    this.dbService.getAll('people').subscribe((people) => {
+      this.people = [];
+      console.log(people);
+    })
+  }
+
+  addToDb(){
+    return this.dbService.add('people', {
+    name: `Bruce Wayne`,
+    email: `bruce@wayne.com`,
+  }).subscribe(()=>{
+    this.getDataFromDb()
+  })
   }
 }
