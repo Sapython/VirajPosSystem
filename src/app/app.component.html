@@ -13,11 +13,11 @@
 
 <input type="text" #textDB>
 <button (click)="addToDb()">Add to db</button>
-<!-- <ol>
-  <li *ngFor="let item of getDataFromDb() | async">
+<ol>
+  <li *ngFor="let item of offlineData | async">
     {{item.name}}
   </li>
-</ol> -->
+</ol>
 
 <!-- <div class="grid">
   <div class="box" [ngStyle]="{'background-color':item[0],'box-shadow':('0px 3px 20px rgba('+item[1][0]+','+item[1][1]+','+item[1][2]+',0.9)')}" *ngFor="let item of coloredDivs">
