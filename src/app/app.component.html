@@ -1,26 +1,60 @@
 <h1>{{added}}</h1>
-<!-- Toolbar -->
+
 <router-outlet></router-outlet>
-<input type="text" #text>
-<button (click)="onlineDbService.addTask(text.value)">Add task</button>
-<ol>
-  <li *ngFor="let item of list">
-    {{item.task}}
-    <button (click)="onlineDbService.deleteTask(item.id)">-</button>
+
+<div class="categories">
+  <h1>Categories</h1>
+  <li *ngFor="let category of categories">
+    {{category.name}}
+    <button (click)="selectCategory(category)">Select</button>
   </li>
-</ol>
-
-
-<input type="text" #textDB>
-<button (click)="addToDb()">Add to db</button>
-<ol>
-  <li *ngFor="let item of offlineData | async">
-    {{item.name}}
+</div>
+<div class="categories">
+  <h1>Dishes</h1>
+  <li *ngFor="let dish of filteredDishes">
+    {{dish.dishName}}
+    <button (click)="addProduct(dish)">Add</button>
   </li>
-</ol>
+</div>
+<div class="categories" *ngIf="currentBill">
+  <h1>Current Bill</h1>
+  <details *ngFor="let token of currentBill.tokens">
+    <summary>Token No {{token.tokenNo}}</summary>
+    <div>
+      <ol>
+        <li *ngFor="let item of token.items">{{item.name}} <input type="number" [(ngModel)]="item.quantity">   {{item.price * item.quantity}}  <button (click)="removeItem(item,token.items)">-</button> <button (click)="addInstruction(item)">i</button></li>
+      </ol>
+      <button (click)="currentBill.tokens[currentBill.tokens.length-1].status='finalized'">Finalize</button>
+    </div>
+  </details>
+</div>
 
-<!-- <div class="grid">
-  <div class="box" [ngStyle]="{'background-color':item[0],'box-shadow':('0px 3px 20px rgba('+item[1][0]+','+item[1][1]+','+item[1][2]+',0.9)')}" *ngFor="let item of coloredDivs">
-    
-  </div>
-</div> -->
+<div id="bill" *ngIf="currentBill">
+  <h1>Bill</h1>
+  <table>
+    <tr>
+      <th>Token No</th>
+      <th>Items</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Amount</th>
+    </tr>
+    <tr *ngFor="let token of currentBill.tokens">
+      <td>{{token.tokenNo}}</td>
+      <td>
+        <ol>
+          <li *ngFor="let item of token.items">{{item.name}}</li>
+        </ol>
+      </td>
+      <td>
+        <p *ngFor="let item of token.items">{{item.price}}</p>
+      </td>
+      <td>
+        <p *ngFor="let item of token.items">{{item.quantity}}</p>
+      </td>
+      <td>
+        <p *ngFor="let item of token.items">{{item.price * item.quantity}}</p>
+      </td>
+    </tr>
+  </table>
+</div>

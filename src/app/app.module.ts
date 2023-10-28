@@ -28,6 +28,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { DBConfig, NgxIndexedDBModule } from 'ngx-indexed-db';
+import { FormsModule } from '@angular/forms';
 
 const dbConfig: DBConfig = {
   name: 'MyDb',
@@ -48,6 +49,7 @@ const dbConfig: DBConfig = {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
